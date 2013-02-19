@@ -15,7 +15,8 @@
         "composer/installers": "*"
     },
     "require-dev": {
-        "swiftmailer/swiftmailer": "v4.3.0"
+        "swiftmailer/swiftmailer": "v4.3.0",
+        "unionofrad/li3_quality": "dev-master"
     },
     "suggest": {
         "swiftmailer/swiftmailer": "To use the 'Swift' adapter with the plugin the SwiftMailer library must be installed."

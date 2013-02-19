@@ -7,6 +7,17 @@ use li3_mailer\net\mail\Message;
 use lithium\core\Libraries;
 
 class DebugTest extends \lithium\test\Unit {
+
+	public function skip() {
+		$path = Libraries::get(true, 'resources');
+
+		if (is_writable($path) && !is_dir("{$path}/tmp/tests")) {
+			mkdir("{$path}/tmp/tests", 0777, true);
+		}
+		$this->_testPath = "{$path}/tmp/tests";
+		$this->skipIf(!is_writable($this->_testPath), "Path `{$this->_testPath}` is not writable.");
+	}
+
 	public function testDeliver() {
 		$options = array('to' => 'foo@bar', 'subject' => 'test subject');
 		$message = new Message($options);
@@ -25,9 +36,7 @@ class DebugTest extends \lithium\test\Unit {
 	}
 
 	public function testDeliverLogToFile() {
-		$path = realpath(Libraries::get(true, 'resources') . '/tmp/tests');
-		$this->skipIf(!is_writable($path), "Path `{$path}` is not writable.");
-		$log = $path . DIRECTORY_SEPARATOR . 'mail.log';
+		$log = $this->_testPath . DIRECTORY_SEPARATOR . 'mail.log';
 		file_put_contents($log, "initial content\n");
 		$options = array('to' => 'foo@bar', 'subject' => 'test subject');
 		$message = new Message($options);
@@ -45,9 +54,7 @@ class DebugTest extends \lithium\test\Unit {
 	}
 
 	public function testDeliverLogToDir() {
-		$path = realpath(Libraries::get(true, 'resources') . '/tmp/tests');
-		$this->skipIf(!is_writable($path), "Path `{$path}` is not writable.");
-		$log = $path . DIRECTORY_SEPARATOR . 'mails';
+		$log = $this->_testPath . DIRECTORY_SEPARATOR . 'mails';
 		if (!is_dir($log)) {
 			mkdir($log);
 		}
