@@ -10,7 +10,6 @@ before_install:
   - composer self-update
   - composer install --prefer-source --dev
   - sed -i '$d' config/bootstrap.php
-  - echo "use lithium\core\Libraries;" >> config/bootstrap.php
   - echo "Libraries::add('li3_quality');" >> config/bootstrap.php
   - echo "Libraries::add('swiftmailer', array('prefix' => 'Swift_', 'path' => 'vendor/swiftmailer/swiftmailer', 'bootstrap' => 'lib/swift_required.php'));" >> config/bootstrap.php
 
